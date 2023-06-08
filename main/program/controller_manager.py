@@ -11,7 +11,7 @@ class Controller_Manager:
         self.joysticks: list[pg.joystick.Joystick] = []
 
         # when REFRESH_SEARCH IS POSTED, TRIGGER THE ADD_JOYSTICKS FUNCTION
-        notification_manager.register_observer( [ REFRESH_SEARCH ], self.add_joysticks )
+        notification_manager.register_observer( -1, [ REFRESH_SEARCH ], self.add_joysticks )
 
     def translate_event( self, event:pg.event.Event ):
         
@@ -24,24 +24,26 @@ class Controller_Manager:
         
         self.define_button_action( event, pg.CONTROLLER_BUTTON_A, JUMP)
 
+        
+
         for joystick in self.joysticks:
             horizontal_left_axis = joystick.get_axis(0)
-            notification_manager.post(Notification_Event(joystick.get_guid(), MOVE, value=horizontal_left_axis)) 
+            notification_manager.post(Notification_Event(joystick.get_instance_id(), MOVE, value=horizontal_left_axis)) 
     
     # for keyboard events, pygame doesn't have a built in identifier system, so I'll need to find it in other python packages. For now its fine, since I'm only using one controller
     # this function makes associating key actions with post messages quicker to define in translate_event
     # start value is the value that will be passed when the key is pressed, end_value is the value that will be passed when the key is released
-    def define_key_action(self, event:pg.event.Event, key:int, flag:int, start_value:float=0, end_value:float=0, id:str=""):
+    def define_key_action(self, event:pg.event.Event, key:int, flag:int, start_value:float=0, end_value:float=0, id:int=-1):
         if event.type == pg.KEYDOWN and event.key == key:
             notification_manager.post( Notification_Event( id=id, flag=flag, value=start_value ) )
         if event.type == pg.KEYUP and event.key == key:
             notification_manager.post( Notification_Event( id=id, flag=flag, value=end_value ) )
         
-    def define_button_action(self, event:pg.event.Event, button:int, flag:int, start_value:float=0, end_value:float=0, id:str=""):
+    def define_button_action(self, event:pg.event.Event, button:int, flag:int, start_value:float=0, end_value:float=0):
         if event.type == pg.JOYBUTTONDOWN and event.button == button:
-            notification_manager.post( Notification_Event( id=id, flag=flag, value=start_value ) )
+            notification_manager.post( Notification_Event( id=event.joy, flag=flag, value=start_value ) )
         if event.type == pg.JOYBUTTONUP and event.button == button:
-            notification_manager.post( Notification_Event( id=id, flag=flag, value=end_value ) )
+            notification_manager.post( Notification_Event( id=event.joy, flag=flag, value=end_value ) )
 
 
     # triggered by a Controller_Event

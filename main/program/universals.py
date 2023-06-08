@@ -7,7 +7,7 @@ RED = (255, 0, 0)
 
 # //MARK: Game
 FPS = 60
-GRAVITY = 100
+GRAVITY = 9.8
 
 # //MARK: FLAGS
 # can be an enum

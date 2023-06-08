@@ -33,11 +33,6 @@ class Rigid_Body(pg.sprite.Sprite):
         # Properties
         self.feels_gravity = feels_gravity
 
-        # self.setup()
-
-    def setup(self):
-        notification_manager.register_observer( [ MOVE ], self.move )
-        notification_manager.register_observer( [ JUMP ], self.jump )
 
     def update(self):
         self.check_collisions()
