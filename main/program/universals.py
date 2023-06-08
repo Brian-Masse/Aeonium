@@ -1,15 +1,19 @@
 import pygame as pg
 
+# //MARK: Vars
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 RED = (255, 0, 0)
 
+# //MARK: Game
 FPS = 60
+GRAVITY = 100
 
 # //MARK: FLAGS
 # can be an enum
 MOVE = 1
 REFRESH_SEARCH = 2 # the action to trigger a refresh search for joysticks
+JUMP = 3
 
 # //MARK: GLOBAL CLASSES
 

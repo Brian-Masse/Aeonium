@@ -15,6 +15,8 @@ object = Rigid_Body( (100, 100) )
 object2 = Rigid_Body( (100, 100), (120, 0), RED )
 ground = Ground( (1000, 25), pos=(0, SCREEN_HEIGHT - 25))
 
+object.setup()
+
 sprite_manager.add( [ object, ground ] )
 
 # //MARK: MAIN LOOP

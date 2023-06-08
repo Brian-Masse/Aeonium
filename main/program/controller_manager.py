@@ -20,6 +20,9 @@ class Controller_Manager:
         # move
         self.define_key_action( event, pg.K_d, MOVE, start_value=1, end_value=0 )
         self.define_key_action( event, pg.K_a, MOVE, start_value=-1, end_value=0 )
+        self.define_key_action( event, pg.K_SPACE, JUMP)
+        
+        self.define_button_action( event, pg.CONTROLLER_BUTTON_A, JUMP)
 
         for joystick in self.joysticks:
             horizontal_left_axis = joystick.get_axis(0)
@@ -32,6 +35,12 @@ class Controller_Manager:
         if event.type == pg.KEYDOWN and event.key == key:
             notification_manager.post( Notification_Event( id=id, flag=flag, value=start_value ) )
         if event.type == pg.KEYUP and event.key == key:
+            notification_manager.post( Notification_Event( id=id, flag=flag, value=end_value ) )
+        
+    def define_button_action(self, event:pg.event.Event, button:int, flag:int, start_value:float=0, end_value:float=0, id:str=""):
+        if event.type == pg.JOYBUTTONDOWN and event.button == button:
+            notification_manager.post( Notification_Event( id=id, flag=flag, value=start_value ) )
+        if event.type == pg.JOYBUTTONUP and event.button == button:
             notification_manager.post( Notification_Event( id=id, flag=flag, value=end_value ) )
 
 
