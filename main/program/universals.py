@@ -6,6 +6,11 @@ RED = (255, 0, 0)
 
 FPS = 60
 
+# //MARK: FLAGS
+# can be an enum
+MOVE = 1
+REFRESH_SEARCH = 2 # the action to trigger a refresh search for joysticks
+
 # //MARK: GLOBAL CLASSES
 
 class vector2:
@@ -22,7 +27,7 @@ class vector2:
         if index == 0: self.x = value
         if index == 1: self.y = value
         return 0
-
+    
 # //MARK: GLOBAL FUNCTIONS
 
 def translate_y( position ) -> float:

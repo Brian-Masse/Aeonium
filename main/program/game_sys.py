@@ -3,6 +3,7 @@ import math
 
 from program.universals import*
 from program.UI.text import* 
+from program.controller_manager import*
 
 # //MARK: GLOBALS
 SCREEN_WIDTH = 1200
@@ -14,7 +15,7 @@ pg.display.set_caption( SCREEN_NAME )
 pg.display.set_mode()
 Global_screen: pg.Surface = pg.display.set_mode( ( SCREEN_WIDTH, SCREEN_HEIGHT ), screen_flags )
 
-class Sprite_manager:
+class Sprite_Manager:
     def __init__(self):
         self.sprites: list[pg.sprite.Sprite] = []
 
@@ -22,7 +23,7 @@ class Sprite_manager:
         for sprite in sprites:
             self.sprites.append(sprite)
 
-sprite_manager = Sprite_manager()
+sprite_manager = Sprite_Manager()
 
 # //MARK: Game System
 class Sys(): 
@@ -41,6 +42,8 @@ class Sys():
             sprite.update()
 
         self.update_clock()
+        controller_manager.update()
+        
 
     def render(self):
         Global_screen.fill( WHITE )

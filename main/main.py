@@ -5,6 +5,7 @@ pg.init()
 from program.game_sys import*
 from program.rigid_body import*
 from program.UI.text import*
+from program.controller_manager import*
 
 import math
 import random
@@ -14,13 +15,18 @@ object = Rigid_Body( (100, 100) )
 object2 = Rigid_Body( (100, 100), (120, 0), RED )
 ground = Ground( (1000, 25), pos=(0, SCREEN_HEIGHT - 25))
 
-sprite_manager.add( [ object, object2, ground ] )
+sprite_manager.add( [ object, ground ] )
 
 # //MARK: MAIN LOOP
 while Game_sys.running:
     for event in pg.event.get():
+
+        controller_manager.translate_event( event )
+
         if (event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE) or (event.type == pg.QUIT):
                 Game_sys.running = False
+
+
 
     Game_sys.update()
     Game_sys.render()

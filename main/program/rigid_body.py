@@ -4,6 +4,7 @@ import uuid
 
 from program.universals import*
 from program.game_sys import*
+from program.controller_manager import*
 
 # //MARK: RIGID BODY
 
@@ -32,10 +33,17 @@ class Rigid_Body(pg.sprite.Sprite):
         # Properties
         self.feels_gravity = feels_gravity
 
+        self.setup()
+
+    def setup(self):
+        controller_manager.register_observer( [ MOVE ], self.move )
 
     def update(self):
-        self.calculate_pos()
         self.check_collisions()
+        self.calculate_pos()
+        
+    def move(self, event:Controller_Event):
+        self.velocity.x = ( event.value / max(abs(event.value), 1) ) * 5
 
     def check_collisions(self):
         copy_sprites = sprite_manager.sprites.copy()
@@ -57,7 +65,7 @@ class Rigid_Body(pg.sprite.Sprite):
         self.velocity.set(dir, new_velocity)
 
         # when the bounces become small enough, stop treating it like a collision and simply resist the force of the block
-        if abs(new_velocity) <= 10:
+        if abs(new_velocity) <= 20:
             self.in_collision = False
             self.forces.set(dir, -self.forces.get(dir))
         
@@ -68,7 +76,7 @@ class Rigid_Body(pg.sprite.Sprite):
 
         self.velocity.y += ( self.forces.y / self.mass ) * float(Game_sys.dt)
         
-        self.rect.x += (self.velocity.x / 20)
+        self.rect.x += (self.velocity.x)
         self.rect.y += (self.velocity.y / 20)
 
     def render(self, surface: pg.Surface):
