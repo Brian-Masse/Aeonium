@@ -9,24 +9,24 @@ from program.game_sys import*
 
 class Rigid_Body(pg.sprite.Sprite):
 
-    def __init__(self, size: vector2, pos: vector2=(0, 0), feels_gravity=True):
+    def __init__(self, size: vector2, pos: vector2=(0, 0), color:tuple[int, int, int]=BLACK, feels_gravity=True):
         pg.sprite.Sprite.__init__(self)
 
         self.id = uuid.uuid1()
 
         # basic attributes
         self.image = pg.Surface( size )
-        self.image.fill( BLACK )
+        self.image.fill( color )
         self.rect = self.image.get_rect()
         self.rect.topleft = pos
 
         # physics
         self.mass: float = 50
-        self.elasticity: float = 0.3
         self.forces = vector2(0, 0)
         self.velocity = vector2(0, 0)
 
         # Collision
+        self.elasticity: float = 0.5
         self.in_collision = False
 
         # Properties
@@ -50,13 +50,14 @@ class Rigid_Body(pg.sprite.Sprite):
             else:
                 self.in_collision = False
 
+    # for a moving object against a fixed one 
     def collide_elastically(self, dir:int ):
         self.in_collision = True
         new_velocity = self.elasticity * -self.velocity.get(dir)
         self.velocity.set(dir, new_velocity)
 
         # when the bounces become small enough, stop treating it like a collision and simply resist the force of the block
-        if new_velocity <= 5:
+        if abs(new_velocity) <= 10:
             self.in_collision = False
             self.forces.set(dir, -self.forces.get(dir))
         
@@ -67,8 +68,8 @@ class Rigid_Body(pg.sprite.Sprite):
 
         self.velocity.y += ( self.forces.y / self.mass ) * float(Game_sys.dt)
         
-        self.rect.x += (self.velocity.x / 10)
-        self.rect.y += (self.velocity.y / 10)
+        self.rect.x += (self.velocity.x / 20)
+        self.rect.y += (self.velocity.y / 20)
 
     def render(self, surface: pg.Surface):
         surface.blit( self.image, self.rect )

@@ -11,9 +11,10 @@ import random
 
 # objects
 object = Rigid_Body( (100, 100) )
+object2 = Rigid_Body( (100, 100), (120, 0), RED )
 ground = Ground( (1000, 25), pos=(0, SCREEN_HEIGHT - 25))
 
-sprite_manager.add( [ object, ground ] )
+sprite_manager.add( [ object, object2, ground ] )
 
 # //MARK: MAIN LOOP
 while Game_sys.running:

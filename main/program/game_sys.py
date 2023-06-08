@@ -51,9 +51,11 @@ class Sys():
         self.test_text.render(Global_screen)
 
     def update_clock(self):
-        self.dt = self.clock.tick(FPS)
+        pass
+        # this is now happening after the render loop in main.py
+        
+        # self.dt = self.clock.tick(FPS)
         # self.fps = self.clock.get_fps()
-
         # self.test_text.update("fps: " + str( math.floor(self.fps)))
             
 
