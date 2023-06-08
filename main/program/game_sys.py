@@ -42,7 +42,7 @@ class Sys():
             sprite.update()
 
         self.update_clock()
-        controller_manager.update()
+        notification_manager.update()
         
 
     def render(self):

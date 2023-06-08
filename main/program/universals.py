@@ -30,5 +30,3 @@ class vector2:
     
 # //MARK: GLOBAL FUNCTIONS
 
-def translate_y( position ) -> float:
-    return SCREEN_HEIGHT - position

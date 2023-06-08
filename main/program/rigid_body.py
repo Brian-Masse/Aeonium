@@ -36,13 +36,13 @@ class Rigid_Body(pg.sprite.Sprite):
         self.setup()
 
     def setup(self):
-        controller_manager.register_observer( [ MOVE ], self.move )
+        notification_manager.register_observer( [ MOVE ], self.move )
 
     def update(self):
         self.check_collisions()
         self.calculate_pos()
         
-    def move(self, event:Controller_Event):
+    def move(self, event:Notification_Event):
         self.velocity.x = ( event.value / max(abs(event.value), 1) ) * 5
 
     def check_collisions(self):
