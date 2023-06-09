@@ -3,8 +3,10 @@ import pygame as pg
 # //MARK: Vars
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
+
 RED = (255, 0, 0)
 BLUE = (0, 0, 255)
+GREEN = (0, 255, 0)
 
 # //MARK: Game
 FPS = 60
@@ -15,6 +17,7 @@ GRAVITY = 9.8
 MOVE = 1
 REFRESH_SEARCH = 2 # the action to trigger a refresh search for joysticks
 JUMP = 3
+JAB = 4
 
 # //MARK: GLOBAL CLASSES
 
@@ -63,7 +66,3 @@ class vector4:
     def clear(self):
         for i in range( 0, 4 ):
             self.vals[i] = 0
-
-
-# //MARK: GLOBAL FUNCTIONS
-

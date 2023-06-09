@@ -24,6 +24,7 @@ class Controller_Manager:
         self.define_key_action( event, pg.K_SPACE, JUMP)
         
         self.define_button_action( event, pg.CONTROLLER_BUTTON_A, JUMP)
+        self.define_button_action( event, pg.CONTROLLER_BUTTON_B, JAB)
 
         for joystick in self.joysticks:
             horizontal_left_axis = joystick.get_axis(0)

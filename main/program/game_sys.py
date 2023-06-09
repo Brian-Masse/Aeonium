@@ -1,5 +1,6 @@
 import pygame as pg
 import math
+import uuid
 
 from program.universals import*
 from program.UI.text import* 
@@ -37,7 +38,11 @@ class Sys():
         self.dt: float = 1 # delta time
         self.fps: int = 1
 
+        self.timers: list[Timer] = []
+
         self.test_text = Text("fps: ")
+
+        
 
     def update(self):
         for sprite in sprite_manager.sprites:
@@ -58,17 +63,31 @@ class Sys():
         Global_screen.blit( Digital_screen, (0, 0) )
 
     def update_clock(self):
-        pass
         # this is now happening after the render loop in main.py
-
         self.dt = self.clock.tick(FPS) / 100
-        
-        
-        # self.dt = self.clock.tick(FPS)
-        # self.fps = self.clock.get_fps()
-        # self.test_text.update("fps: " + str( math.floor(self.fps)))
-            
-
+        for timer in self.timers:
+            timer.update()
 
 Game_sys = Sys()
+
+# duration is in frames, for milliseconds, use pygame built in timers
+class Timer():
+    def __init__( self, duration:int, action ):
+        self.count: int = 0 
+        self.id = str(uuid.uuid1())
+
+        self.duration = duration
+        self.action = action
+
+        Game_sys.timers.append( self )
+    
+    def update(self):
+        self.count += 1
+        if self.count >= self.duration:
+            self.action()
+            Game_sys.timers.remove( self )
+
+
+
+
 
