@@ -12,7 +12,7 @@ class Controller_Manager:
         self.add_joysticks()
 
         # when REFRESH_SEARCH IS POSTED, TRIGGER THE ADD_JOYSTICKS FUNCTION
-        notification_manager.register_observer( -1, [ REFRESH_SEARCH ], self.add_joysticks )
+        notification_manager.register_observer( 0, [ REFRESH_SEARCH ], self.add_joysticks )
 
     def translate_event( self, event:pg.event.Event ):
         
@@ -38,7 +38,7 @@ class Controller_Manager:
         if event.type == pg.KEYUP and event.key == key:
             notification_manager.post( Notification_Event( id=id, flag=flag, value=end_value ) )
         
-    def define_button_action(self, event:pg.event.Event, button:int, flag:int, start_value:float=0, end_value:float=0):
+    def define_button_action(self, event:pg.event.Event, button:int, flag:int, start_value:float=1, end_value:float=0):
         if event.type == pg.JOYBUTTONDOWN and event.button == button:
             notification_manager.post( Notification_Event( id=event.joy, flag=flag, value=start_value ) )
         if event.type == pg.JOYBUTTONUP and event.button == button:

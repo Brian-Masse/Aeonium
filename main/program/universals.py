@@ -44,12 +44,7 @@ class vector2:
     
 class vector4:
     def __init__( self, x:float, y:float, z:float, w:float ):
-        self.x = x
-        self.y = y
-        self.z = y
-        self.w = y
-
-        self.vals = [ self.x, self.y, self.z, self.w ]
+        self.vals = [ x, y, z, w ]
 
     def get(self, index:int) -> float:
         return self.vals[int(index)]

@@ -33,12 +33,12 @@ class Rigid_Body(pg.sprite.Sprite):
         self.rect.center = (self.x, self.y)
 
         # physics
-        self.mass: float = 50
+        self.mass: float = 5
         self.forces = vector4(0, 0, 0, 0) #+x, -x, +y, -y
         self.velocity = vector2(0, 0)
 
         # Collision
-        self.elasticity: float = 0.5
+        self.elasticity: float = 0
         self.in_collision = False
 
         # Properties
@@ -49,9 +49,8 @@ class Rigid_Body(pg.sprite.Sprite):
     def update(self):
 
         self.reset_vars()
-        if self.feels_gravity:
-            self.forces.add( PY, GRAVITY )
 
+        self.apply_gravity()
         self.calculate_pos()
         self.check_collisions()
         self.finalize_pos()
@@ -60,12 +59,16 @@ class Rigid_Body(pg.sprite.Sprite):
     def reset_vars(self):
         self.on_ground = False
 
+    def apply_gravity(self):
+        if self.feels_gravity:
+            self.forces.add( PY, GRAVITY * self.mass )
+
     # simulate the next move for positon
     # check_collision will validate this
     def calculate_pos(self):
 
         net_y = self.forces.get(PY) + self.forces.get(NY)
-        self.velocity.add(Y, net_y / self.mass )
+        self.velocity.add(Y, math.ceil(net_y / self.mass) )
         
         self.x += (self.velocity.get(X)) * Game_sys.dt
         self.y += (self.velocity.get(Y)) * Game_sys.dt
@@ -83,7 +86,7 @@ class Rigid_Body(pg.sprite.Sprite):
 
         for sprite in copy_sprites:
 
-            if isinstance(sprite, Ground) and not isinstance(self, Ground):
+            if not isinstance(self, Ground):
                 collision_dir = self.check_collision( sprite )
                 if collision_dir != -1:
                     if collision_dir == COLLISION_DOWN: 

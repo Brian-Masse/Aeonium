@@ -61,7 +61,7 @@ class Sys():
         pass
         # this is now happening after the render loop in main.py
 
-        self.dt = self.clock.tick(FPS) / 10
+        self.dt = self.clock.tick(FPS) / 100
         
         
         # self.dt = self.clock.tick(FPS)
