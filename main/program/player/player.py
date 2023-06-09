@@ -18,7 +18,7 @@ class Action:
 
 class Player( Rigid_Body ):
     def __init__(self, id:int, size: vector2, pos:vector2=(0, 0), color:tuple[int, int, int]=BLACK):
-        super().__init__( size, vector2(100, 100), color )
+        super().__init__( size, pos, color )
 
         self.id = id
 
@@ -62,7 +62,7 @@ class Player( Rigid_Body ):
 
     # returns a bool so the action manager know that this action has completed
     def receive_jump(self, event:Notification_Event):
-        action = Action( 1, event.flag, self.jump )
+        action = Action( 2, event.flag, self.jump )
         if len([ action for action in self.action_queue if action.flag == event.flag ]) == 0:
             if event.value == 1:
                 self.action_queue.append( action )
