@@ -9,15 +9,14 @@ class Player( Rigid_Body ):
         self.id = id
 
         self.MOVEMENT_THRESHOLD: float = 0.1
-
-        self.on_ground = False
         
         self.setup()
 
     def setup(self):
         notification_manager.register_observer( self.id, [ MOVE ], self.move )
         notification_manager.register_observer( self.id, [ JUMP ], self.jump )
-    
+
+
     # //MARK: ACTIONS
     def move(self, event:Notification_Event):
     
@@ -29,6 +28,7 @@ class Player( Rigid_Body ):
         self.velocity.set(X, move_speed) 
     
     def jump(self, event:Notification_Event):
-        self.forces.add( NY, -200 )
+        if self.on_ground:
+            self.forces.add( NY, -500 )
         
 

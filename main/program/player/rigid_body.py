@@ -43,15 +43,22 @@ class Rigid_Body(pg.sprite.Sprite):
 
         # Properties
         self.feels_gravity = feels_gravity
+        self.on_ground = False
 
     # //MARK: UPDATE LOOP
     def update(self):
+
+        self.reset_vars()
         if self.feels_gravity:
             self.forces.add( PY, GRAVITY )
 
         self.calculate_pos()
         self.check_collisions()
         self.finalize_pos()
+
+    # done at the start of the loop instead of the end, because all actions run before the first call of this loop 
+    def reset_vars(self):
+        self.on_ground = False
 
     # simulate the next move for positon
     # check_collision will validate this
@@ -79,6 +86,8 @@ class Rigid_Body(pg.sprite.Sprite):
             if isinstance(sprite, Ground) and not isinstance(self, Ground):
                 collision_dir = self.check_collision( sprite )
                 if collision_dir != -1:
+                    if collision_dir == COLLISION_DOWN: 
+                        self.on_ground = True
                     self.collide_elastically(collision_dir, sprite)
                 
 
