@@ -59,6 +59,10 @@ class vector4:
     
     def add(self, index:int, value:float):
         self.vals[int(index)] += value
+    
+    # axis is 0 for x and 1 for 1
+    def net(self, axis:int) -> float:
+        return self.vals[ int(2 * axis) ] + self.vals[ int(2 * axis) + 1 ]
 
     def clear(self):
         for i in range( 0, 4 ):

@@ -13,11 +13,14 @@ import math
 import random
 
 # objects
-object = Player( 0, (100, 100) )
-object2 = Player( 1, (100, 100), (120, 0), RED )
-ground = Ground( (1000, 25), pos=(0, SCREEN_HEIGHT - 25))
+object = Player( 0, (100, 100), pos=vector2(200, 1000) )
 
-sprite_manager.add( [ object, ground ] )
+object2 = Player( 1, (100, 100), (120, 0), RED )
+
+ground = Ground( (1000, 25), pos=vector2(0, SCREEN_HEIGHT - 25))
+ground2 = Ground( (25, 300), pos=vector2(500, 500))
+
+sprite_manager.add( [ object, object2, ground, ground2] )
 
 # //MARK: MAIN LOOP
 while Game_sys.running:
